@@ -1,0 +1,2 @@
+2025-05-21 12:50:48.901 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - this is logging information ... 2025-05-21T12:50:48.900460
+2025-05-21 12:50:48.904 [main] DEBUG com.tahakamil.kafka.logaggregator.LogProducer - this is debugging ... 2025-05-21T12:50:48.904490
