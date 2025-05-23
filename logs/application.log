@@ -1,30 +1,5 @@
-2025-05-21 12:50:48.901 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - this is logging information ... 2025-05-21T12:50:48.900460
-2025-05-21 12:50:48.904 [main] DEBUG com.tahakamil.kafka.logaggregator.LogProducer - this is debugging ... 2025-05-21T12:50:48.904490
-2025-05-21 14:24:57.209 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Reading KafkaConfig Properties: KafkaProperties{bootstrapServers='localhost:9092', topic='logs'}
-2025-05-21 14:25:51.393 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Reading KafkaConfig Properties: KafkaProperties{bootstrapServers='localhost:9092', topic='logs'}
-2025-05-21 14:26:47.275 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Reading KafkaConfig Properties: KafkaProperties{bootstrapServers='localhost:9092', topic='logs'}
-2025-05-21 14:43:51.052 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Starting LogProducer to topic 'logs'
-2025-05-21 14:45:44.039 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Starting LogProducer to topic 'logs'
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #1 from service-A | partition=2 offset=0
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #2 from service-A | partition=2 offset=1
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #3 from service-A | partition=2 offset=2
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #4 from service-A | partition=2 offset=3
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #5 from service-A | partition=2 offset=4
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #6 from service-A | partition=2 offset=5
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #7 from service-A | partition=2 offset=6
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #8 from service-A | partition=2 offset=7
-2025-05-21 14:45:45.001 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #9 from service-A | partition=2 offset=8
-2025-05-21 14:45:45.002 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #10 from service-A | partition=2 offset=9
-2025-05-21 14:45:45.035 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - LogProducer finished and shut down.
-2025-05-21 14:46:56.845 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Starting LogProducer to topic 'logs'
-2025-05-21 14:46:57.728 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #1 from service-A V2 | partition=2 offset=10
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #2 from service-A V2 | partition=2 offset=11
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #3 from service-A V2 | partition=2 offset=12
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #4 from service-A V2 | partition=2 offset=13
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #5 from service-A V2 | partition=2 offset=14
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #6 from service-A V2 | partition=2 offset=15
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #7 from service-A V2 | partition=2 offset=16
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #8 from service-A V2 | partition=2 offset=17
-2025-05-21 14:46:57.729 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #9 from service-A V2 | partition=2 offset=18
-2025-05-21 14:46:57.730 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.LogProducer - Sent: [service-A] -> Log message #10 from service-A V2 | partition=2 offset=19
-2025-05-21 14:46:57.765 [main] INFO  com.tahakamil.kafka.logaggregator.LogProducer - LogProducer finished and shut down.
+2025-05-23 20:13:25.830 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.publisher.KafkaLogPublisher - Log message Sent to topic: logs -- message: [payment] 2025-05-23T19:13:25.736489Z [WARN] (auth) Officiis quibusdam perspiciatis magni illum accusantium esse ab. -- (partition=2, offset=40)
+2025-05-23 20:13:25.840 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.publisher.KafkaLogPublisher - Log message Sent to topic: logs -- message: [inventory] 2025-05-23T19:13:25.318434Z [INFO] (auth) Minus ad sint. -- (partition=1, offset=0)
+2025-05-23 20:13:25.841 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.publisher.KafkaLogPublisher - Log message Sent to topic: logs -- message: [inventory] 2025-05-23T19:13:25.741476Z [DEBUG] (inventory) Aut id fugit neque. -- (partition=1, offset=1)
+2025-05-23 20:13:25.841 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.publisher.KafkaLogPublisher - Log message Sent to topic: logs -- message: [auth] 2025-05-23T19:13:25.742536Z [WARN] (auth) Hic hic nulla inventore id. -- (partition=1, offset=2)
+2025-05-23 20:13:25.841 [kafka-producer-network-thread | producer-1] INFO  com.tahakamil.kafka.logaggregator.publisher.KafkaLogPublisher - Log message Sent to topic: logs -- message: [auth] 2025-05-23T19:13:25.743345Z [ERROR] (auth) Id corporis nihil ad sint reiciendis nemo. -- (partition=1, offset=3)
