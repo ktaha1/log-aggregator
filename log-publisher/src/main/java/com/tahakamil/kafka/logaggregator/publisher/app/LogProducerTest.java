@@ -1,4 +1,4 @@
-package com.tahakamil.kafka.logaggregator.publisher.main;
+package com.tahakamil.kafka.logaggregator.publisher.app;
 
 import com.tahakamil.kafka.logaggregator.common.interfaces.LogGenerator;
 import com.tahakamil.kafka.logaggregator.common.interfaces.LogPublisher;
@@ -8,8 +8,8 @@ import com.tahakamil.kafka.logaggregator.publisher.generator.FakeLogGenerator;
 import com.tahakamil.kafka.logaggregator.publisher.impl.KafkaLogPublisher;
 import com.tahakamil.kafka.logaggregator.publisher.service.LogService;
 
-public class LogProducerMain {
-    public static void main(String[] args) {
+public class LogProducerTest {
+    private static void main(String[] args) {
         KafkaProperties config = KafkaPropertiesLoader.loadDefault();
         try (LogPublisher publisher = new KafkaLogPublisher(config)) {
             LogGenerator generator = new FakeLogGenerator();
