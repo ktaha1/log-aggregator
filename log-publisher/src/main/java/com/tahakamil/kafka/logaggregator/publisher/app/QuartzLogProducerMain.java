@@ -19,7 +19,7 @@ public class QuartzLogProducerMain {
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("logTrigger", "logGroup")
                 .withSchedule(
-                        CronScheduleBuilder.cronSchedule("0/10 * * * * ?")
+                        CronScheduleBuilder.cronSchedule("0/30 * * * * ?")
                                 .withMisfireHandlingInstructionDoNothing()
                 )
                 .build();
