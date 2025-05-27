@@ -105,6 +105,26 @@
                         <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.4.0</version>
+                    <configuration>
+                        <to>
+                            <image>log-publisher:${project.version}</image>
+                        </to>
+                        <from>
+                            <image>eclipse-temurin:17-jre-jammy</image>
+                        </from>
+                        <container>
+                            <mainClass>com.tahakamil.kafka.logaggregator.publisher.app.QuartzLogProducerMain</mainClass>
+                            <jvmFlags>
+                                <jvmFlag>-Xms256m</jvmFlag>
+                                <jvmFlag>-Xmx512m</jvmFlag>
+                            </jvmFlags>
+                        </container>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
