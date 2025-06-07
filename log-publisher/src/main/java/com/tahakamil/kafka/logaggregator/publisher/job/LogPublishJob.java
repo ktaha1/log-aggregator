@@ -23,6 +23,8 @@ public class LogPublishJob implements Job {
             service.publishBatch(count);
         } catch (Exception e) {
             logger.error("Error executing LogPublishJob", e);
+        } finally {
+            logger.info("LogPublishJob execution finished.");
         }
     }
 }
