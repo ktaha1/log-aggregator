@@ -16,11 +16,13 @@ public class LogPublishJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context){
+        logger.info("LogPublishJob execution started.");
         KafkaProperties props = KafkaPropertiesLoader.loadDefault();
         try (LogPublisher publisher = new KafkaLogPublisher(props)) {
             LogService service = new LogService(publisher, (LogGenerator) context.getMergedJobDataMap().get("generator"));
             int count = context.getMergedJobDataMap().getInt("count");
             service.publishBatch(count);
+            logger.info("LogPublishJob executed successfully.");
         } catch (Exception e) {
             logger.error("Error executing LogPublishJob", e);
         } finally {
