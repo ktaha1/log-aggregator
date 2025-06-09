@@ -1,41 +1,73 @@
-version: '3.8'
+
 
 services:
-  zookeeper:
-    image: bitnami/zookeeper:latest
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-    ports:
-      - "2181:2181"
-
   kafka:
     image: bitnami/kafka:latest
-    depends_on:
-      - zookeeper
     environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LOG_DIRS=/bitnami/kafka/data
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics.sh --bootstrap-server localhost:9092 --list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - kafka_data:/bitnami/kafka/data
     ports:
       - "9092:9092"
+    restart: unless-stopped
+
+  kafka-init:
+    image: bitnami/kafka:latest
+    depends_on:
+      kafka:
+        condition: service_healthy
+    volumes:
+      - ./init-kafka.sh:/init-kafka.sh
+    command: [ "/bin/bash", "/init-kafka.sh" ]
 
   log-publisher:
-    image: log-publisher:1.0.0-SNAPSHOT
+    build:
+      context: ./log-publisher
+      dockerfile: Dockerfile
+    image: log-publisher:latest
     depends_on:
-      - kafka
-    environment:
-      - SPRING_CONFIG_LOCATION=/app/properties.yaml
+      kafka:
+        condition: service_healthy
+      kafka-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "jps | grep 'log-publisher' || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: unless-stopped
     volumes:
-      - ./log-publisher/src/main/resources/properties.yaml:/app/properties.yaml:ro
+      - ./logs:/app/logs
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
+      kafka-init:
+        condition: service_completed_successfully
     environment:
-      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_NAME=dev
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - DYNAMIC_CONFIG_ENABLED=true
+      - AUTH_TYPE=BASIC
+      - SPRING_SECURITY_USER_NAME=admin
+      - SPRING_SECURITY_USER_PASSWORD=admin
     ports:
       - "8080:8080"
+
+volumes:
+  kafka_data:
+    driver: local
