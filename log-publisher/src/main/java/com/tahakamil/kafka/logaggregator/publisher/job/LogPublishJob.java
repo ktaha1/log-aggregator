@@ -25,8 +25,6 @@ public class LogPublishJob implements Job {
             logger.info("LogPublishJob executed successfully.");
         } catch (Exception e) {
             logger.error("Error executing LogPublishJob", e);
-        } finally {
-            logger.info("LogPublishJob execution finished.");
         }
     }
 }

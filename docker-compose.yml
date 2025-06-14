@@ -12,6 +12,8 @@ services:
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_LOG_DIRS=/bitnami/kafka/data
       - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
     healthcheck:
       test: ["CMD-SHELL", "kafka-topics.sh --bootstrap-server localhost:9092 --list"]
       interval: 30s
