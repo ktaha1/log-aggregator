@@ -53,6 +53,25 @@ services:
     volumes:
       - ./logs:/app/logs
 
+  log-consumer:
+    build:
+      context: ./log-consumer
+      dockerfile: Dockerfile
+    image: log-consumer:latest
+    depends_on:
+      kafka:
+        condition: service_healthy
+      kafka-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "jps | grep 'log-consumer' || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     depends_on:
