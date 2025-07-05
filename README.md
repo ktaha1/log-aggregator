@@ -62,6 +62,7 @@ This will start:
 - Kafka broker on port 9092
 - Kafka UI on port 8080 (admin:admin)
 - Log publisher service (containerized)
+- Log consumer service (containerized)
 
 ### 3. Access Kafka UI
 
@@ -99,6 +100,7 @@ The log publisher is configured to:
 - **Kafka**: Bitnami Kafka image with KRaft mode (no Zookeeper required)
 - **Kafka Init**: Automatically creates the `logs` topic on startup
 - **Log Publisher**: Custom containerized service for log generation
+- **Log Consumer**: Custom containerized service for log processing
 - **Kafka UI**: Web interface for monitoring
 
 ## Development
@@ -122,15 +124,25 @@ log-aggregator/
 │       └── service/            # Business logic
 └── log-consumer/
     └── src/main/java/com/tahakamil/logaggregator/consumer/
-        └── # Consumer implementation (to be developed)
+        ├── app/                # Main application
+        ├── config/             # Kafka consumer configuration
+        ├── impl/               # Kafka consumer implementation
+        └── service/            # Log processing service
 ```
 
 ### Key Classes
 
+**Publisher:**
 - `LogEvent`: Data model for log entries with timestamp, service, level, and message
 - `QuartzLogProducerMain`: Main application class with scheduled job execution
 - `FakeLogGenerator`: Generates realistic fake log data using JavaFaker
 - `KafkaLogPublisher`: Implements the Kafka producer for publishing log events
+
+**Consumer:**
+- `LogConsumerMain`: Main consumer application with graceful shutdown
+- `KafkaLogConsumer`: Implements the Kafka consumer with subscription management
+- `LogProcessor`: Processes consumed logs with error detection and timestamping
+- `KafkaConsumerConfig`: Kafka consumer configuration with retry settings
 
 ### Building Individual Modules
 
@@ -155,6 +167,14 @@ mvn clean package
 java -jar target/log-publisher-1.0-SNAPSHOT.jar
 ```
 
+To run the log consumer locally (without Docker):
+
+```bash
+cd log-consumer
+mvn clean package
+java -jar target/log-consumer-1.0-SNAPSHOT.jar
+```
+
 ## Monitoring
 
 ### Kafka UI Features
@@ -168,8 +188,20 @@ java -jar target/log-publisher-1.0-SNAPSHOT.jar
 ### Log Files
 
 Application logs are stored in:
-- `logs/application.log` - Current log file
-- `logs/application.YYYY-MM-DD.log` - Daily rotated logs
+- `logs/application.log` - Publisher log file
+- `logs/application.YYYY-MM-DD.log` - Publisher daily rotated logs
+- `logs/consumer.log` - Consumer log file
+- `logs/consumer.YYYY-MM-DD.log` - Consumer daily rotated logs
+
+### Consumer Features
+
+The log consumer provides:
+- **Real-time processing** of all log messages from the topic
+- **Error detection** with special highlighting for ERROR logs
+- **Processing timestamps** added to each consumed message
+- **Consumer group management** (`log-consumer-group`)
+- **Graceful shutdown** with proper cleanup
+- **Automatic offset management** starting from earliest available messages
 
 ## Scaling
 
@@ -195,19 +227,47 @@ The system is designed for horizontal scaling:
    - Check publisher container logs: `docker-compose logs log-publisher`
    - Verify Kafka topic exists in UI
 
+4. **Consumer not processing logs**
+   - Check consumer container logs: `docker-compose logs log-consumer`
+   - Verify consumer group membership in Kafka UI
+   - Check if consumer is part of `log-consumer-group`
+
 ### Health Checks
 
 All services include health checks:
 - Kafka: Topic listing command
 - Log Publisher: Java process check
+- Log Consumer: Java process check
+
+## Architecture Overview
+
+The complete system now includes:
+
+### Producer Flow
+1. **Log Publisher** generates fake log events every 30 seconds
+2. **Quartz Scheduler** triggers log generation jobs
+3. **Kafka Producer** publishes logs to the `logs` topic
+
+### Consumer Flow
+1. **Log Consumer** subscribes to the `logs` topic
+2. **LogProcessor** processes each consumed message
+3. **Error Detection** identifies and highlights ERROR logs
+4. **Timestamping** adds processing timestamps to all logs
+
+### Current Implementation Status
+
+- ✅ **log-common**: Shared interfaces and models
+- ✅ **log-publisher**: Complete with Docker support and scheduled publishing
+- ✅ **log-consumer**: Complete with processing pipeline and error detection
+- ✅ **Docker Compose**: Full stack deployment with Kafka UI
 
 ## Future Enhancements
 
-- [ ] Complete log-consumer implementation
 - [ ] Add metrics and monitoring (ElasticSearch/Kibana)
 - [ ] Implement log filtering and routing
 - [ ] Schema registry integration
 - [ ] Multi-environment configuration
+- [ ] Consumer scaling and load balancing
 
 ## Contributing
 
